@@ -10,7 +10,19 @@ on:
 
 jobs:
   build:
+    name: Build image tag ${{ matrix.tag }} from branch ${{ matrix.branch }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - tag: "latest"
+            branch: "master"
+          - tag: "3.4"
+            branch: "release/v3.4"
+          - tag: "3.3"
+            branch: "release/v3.3"
+          - tag: "3.2"
+            branch: "release/v3.2"
 
     steps:
       - uses: actions/checkout@v2
@@ -26,9 +38,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           build-args: |
-            SDK_BRANCH=release/v3.4
+            SDK_BRANCH=${{ matrix.branch }}
           push: true
-          tags: xingrz/esp8266-rtos-builder:3.4
+          tags: xingrz/esp8266-rtos-builder:${{ matrix.tag }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
