@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 RUN apt-get update && \
     apt-get install -y gcc git wget make libncurses-dev flex bison gperf python && \
-    wget https://bootstrap.pypa.io/2.7/get-pip.py && python get-pip.py && rm -f get-pip.py &&\
+    wget https://bootstrap.pypa.io/pip/2.7/get-pip.py && python get-pip.py && rm -f get-pip.py &&\
     mkdir -p /esp
 
 RUN cd /esp && \
